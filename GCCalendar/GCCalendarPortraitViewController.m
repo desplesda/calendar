@@ -27,34 +27,6 @@
 
 @synthesize date, dayView, hasAddButton;
 
-#pragma mark create and destroy view
-- (id)init {
-	if(self = [super init]) {
-		self.title = [[NSBundle mainBundle] localizedStringForKey:@"CALENDAR" value:@"" table:@"GCCalendar"];
-		self.tabBarItem.image = [UIImage imageNamed:@"Calendar.png"];
-		
-		viewDirty = YES;
-		viewVisible = NO;
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(calendarTileTouch:)
-													 name:__GCCalendarTileTouchNotification
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(calendarShouldReload:)
-													 name:GCCalendarShouldReloadNotification
-												   object:nil];
-	}
-	
-	return self;
-}
-- (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	
-	
-}
-
 #pragma mark calendar actions
 - (void)calendarShouldReload:(NSNotification *)notif {
 	viewDirty = YES;
@@ -109,10 +81,18 @@
 }
 
 #pragma mark view notifications
-- (void)loadView {
-	[super loadView];
-	
-	self.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"GCCalendarDate"];
+
+- (void)viewDidLoad {
+    
+    self.title = [[NSBundle mainBundle] localizedStringForKey:@"CALENDAR" value:@"" table:@"GCCalendar"];
+    self.tabBarItem.image = [UIImage imageNamed:@"Calendar.png"];
+    
+    viewDirty = YES;
+    viewVisible = NO;
+    
+    
+    
+    self.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"GCCalendarDate"];
 	if (date == nil) {
 		self.date = [NSDate date];
 	}
@@ -137,12 +117,27 @@
 	// setup today button
 	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[[NSBundle mainBundle] localizedStringForKey:@"TODAY" value:@"" table:@"GCCalendar"]
 															   style:UIBarButtonItemStylePlain
-															  target:self 
+															  target:self
 															  action:@selector(today)];
 	self.navigationItem.leftBarButtonItem = button;
 }
+
+- (void)loadView {
+	[super loadView];
+	
+	
+}
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(calendarTileTouch:)
+                                                 name:__GCCalendarTileTouchNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(calendarShouldReload:)
+                                                 name:GCCalendarShouldReloadNotification
+                                               object:nil];
 	
 	if (viewDirty) {
 		[self reloadDayAnimated:NO context:NULL];
@@ -155,6 +150,9 @@
 	[super viewDidDisappear:animated];
 	
 	viewVisible = NO;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 
 #pragma mark view animation functions
