@@ -221,4 +221,8 @@
 	dayPicker.userInteractionEnabled = YES;
 }
 
+- (void)reloadData {
+    [self reloadDayAnimated:NO context:NULL];
+}
+
 @end

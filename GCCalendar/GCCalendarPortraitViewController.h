@@ -49,4 +49,6 @@
 
 @property (nonatomic, assign) BOOL hasAddButton;
 
+- (void) reloadData;
+
 @end

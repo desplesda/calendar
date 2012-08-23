@@ -25,18 +25,14 @@
     NSTimeInterval myStartDateTime = self.startDate.timeIntervalSinceReferenceDate;
     NSTimeInterval myEndDateTime = self.endDate.timeIntervalSinceReferenceDate;
     
-    
     NSTimeInterval theirStartDateTime = otherEvent.startDate.timeIntervalSinceReferenceDate;
     NSTimeInterval theirEndDateTime = otherEvent.endDate.timeIntervalSinceReferenceDate;
-    
     
     return (myStartDateTime <= theirEndDateTime) && (myEndDateTime >= theirStartDateTime);
 }
 
 - (NSInteger)column {
-    
     return [self.intersectingEvents indexOfObject:self];
-    
 }
 
 
