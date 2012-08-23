@@ -13,7 +13,7 @@
 #import "GCCalendarViewController.h"
 #import "GCCalendarEvent.h"
 #import "GCCalendarProtocols.h"
-#import "GCCalendarPortraitView.h"
+#import "GCCalendarPortraitViewController.h"
 
 // calendar notificaions
 static NSString * const GCCalendarShouldReloadNotification = @"GCCalendarShouldReload";

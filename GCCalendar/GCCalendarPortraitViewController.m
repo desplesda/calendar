@@ -8,7 +8,7 @@
 //  Copyright GUI Cocoa Software 2010. All rights reserved.
 //
 
-#import "GCCalendarPortraitView.h"
+#import "GCCalendarPortraitViewController.h"
 #import "GCCalendarDayView.h"
 #import "GCCalendarTile.h"
 #import "GCDatePickerControl.h"
@@ -16,14 +16,14 @@
 
 #define kAnimationDuration 0.3f
 
-@interface GCCalendarPortraitView ()
+@interface GCCalendarPortraitViewController ()
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) GCCalendarDayView *dayView;
 
 - (void)reloadDayAnimated:(BOOL)animated context:(void *)context;
 @end
 
-@implementation GCCalendarPortraitView
+@implementation GCCalendarPortraitViewController
 
 @synthesize date, dayView, hasAddButton;
 

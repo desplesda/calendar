@@ -12,7 +12,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	// create calendar view
-	GCCalendarPortraitView *calendar = [[GCCalendarPortraitView alloc] init];
+	GCCalendarPortraitViewController *calendar = [[GCCalendarPortraitViewController alloc] init];
 	calendar.dataSource = self;
 	calendar.delegate = self;
 	calendar.hasAddButton = YES;

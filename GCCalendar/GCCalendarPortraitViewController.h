@@ -27,7 +27,7 @@
  push a detailed view controller onto the stack with more information about the
  event (currently unimplemnted)
  */
-@interface GCCalendarPortraitView : GCCalendarViewController {
+@interface GCCalendarPortraitViewController : GCCalendarViewController {
 	// date the view will display
 	NSDate *date;
 	
