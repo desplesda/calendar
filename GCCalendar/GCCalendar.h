@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GCCalendarView.h"
+#import "GCCalendarViewController.h"
 #import "GCCalendarEvent.h"
 #import "GCCalendarProtocols.h"
 #import "GCCalendarPortraitView.h"

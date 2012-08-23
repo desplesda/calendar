@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GCCalendarView.h"
+#import "GCCalendarViewController.h"
 
 @class GCDatePickerControl;
 @class GCCalendarDayView;
@@ -27,7 +27,7 @@
  push a detailed view controller onto the stack with more information about the
  event (currently unimplemnted)
  */
-@interface GCCalendarPortraitView : GCCalendarView {
+@interface GCCalendarPortraitView : GCCalendarViewController {
 	// date the view will display
 	NSDate *date;
 	

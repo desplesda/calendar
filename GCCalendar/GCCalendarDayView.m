@@ -10,7 +10,7 @@
 
 #import "GCCalendarDayView.h"
 #import "GCCalendarTile.h"
-#import "GCCalendarView.h"
+#import "GCCalendarViewController.h"
 #import "GCCalendarEvent.h"
 #import "GCCalendar.h"
 
@@ -292,7 +292,7 @@ static NSArray *timeStrings;
 						@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"];
 	}
 }
-- (id)initWithCalendarView:(GCCalendarView *)view {
+- (id)initWithCalendarView:(GCCalendarViewController *)view {
 	if (self = [super init]) {
 		dataSource = view.dataSource;
 	}

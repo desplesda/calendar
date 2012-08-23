@@ -27,7 +27,7 @@
 		3B96AA7F1139BC99003FF405 /* GCCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B96AA661139BC99003FF405 /* GCCalendarEvent.m */; };
 		3B96AA801139BC99003FF405 /* GCCalendarPortraitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B96AA681139BC99003FF405 /* GCCalendarPortraitView.m */; };
 		3B96AA811139BC99003FF405 /* GCCalendarTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B96AA6B1139BC99003FF405 /* GCCalendarTile.m */; };
-		3B96AA821139BC99003FF405 /* GCCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B96AA6D1139BC99003FF405 /* GCCalendarView.m */; };
+		3B96AA821139BC99003FF405 /* GCCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B96AA6D1139BC99003FF405 /* GCCalendarViewController.m */; };
 		3B96AA831139BC99003FF405 /* GCDatePickerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B96AA6F1139BC99003FF405 /* GCDatePickerControl.m */; };
 		3B96AA841139BC99003FF405 /* GCDatePickerControlBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B96AA701139BC99003FF405 /* GCDatePickerControlBackground.png */; };
 		3B96AA851139BC99003FF405 /* GCDatePickerControlLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B96AA711139BC99003FF405 /* GCDatePickerControlLeft.png */; };
@@ -64,8 +64,8 @@
 		3B96AA691139BC99003FF405 /* GCCalendarProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCalendarProtocols.h; sourceTree = "<group>"; };
 		3B96AA6A1139BC99003FF405 /* GCCalendarTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCalendarTile.h; sourceTree = "<group>"; };
 		3B96AA6B1139BC99003FF405 /* GCCalendarTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCalendarTile.m; sourceTree = "<group>"; };
-		3B96AA6C1139BC99003FF405 /* GCCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCalendarView.h; sourceTree = "<group>"; };
-		3B96AA6D1139BC99003FF405 /* GCCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCalendarView.m; sourceTree = "<group>"; };
+		3B96AA6C1139BC99003FF405 /* GCCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCalendarViewController.h; sourceTree = "<group>"; };
+		3B96AA6D1139BC99003FF405 /* GCCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCalendarViewController.m; sourceTree = "<group>"; };
 		3B96AA6E1139BC99003FF405 /* GCDatePickerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDatePickerControl.h; sourceTree = "<group>"; };
 		3B96AA6F1139BC99003FF405 /* GCDatePickerControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDatePickerControl.m; sourceTree = "<group>"; };
 		3B96AA701139BC99003FF405 /* GCDatePickerControlBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GCDatePickerControlBackground.png; sourceTree = "<group>"; };
@@ -170,8 +170,8 @@
 				3B96AA691139BC99003FF405 /* GCCalendarProtocols.h */,
 				3B96AA6A1139BC99003FF405 /* GCCalendarTile.h */,
 				3B96AA6B1139BC99003FF405 /* GCCalendarTile.m */,
-				3B96AA6C1139BC99003FF405 /* GCCalendarView.h */,
-				3B96AA6D1139BC99003FF405 /* GCCalendarView.m */,
+				3B96AA6C1139BC99003FF405 /* GCCalendarViewController.h */,
+				3B96AA6D1139BC99003FF405 /* GCCalendarViewController.m */,
 				3B96AA6E1139BC99003FF405 /* GCDatePickerControl.h */,
 				3B96AA6F1139BC99003FF405 /* GCDatePickerControl.m */,
 				3B96AA701139BC99003FF405 /* GCDatePickerControlBackground.png */,
@@ -257,7 +257,7 @@
 				3B96AA7F1139BC99003FF405 /* GCCalendarEvent.m in Sources */,
 				3B96AA801139BC99003FF405 /* GCCalendarPortraitView.m in Sources */,
 				3B96AA811139BC99003FF405 /* GCCalendarTile.m in Sources */,
-				3B96AA821139BC99003FF405 /* GCCalendarView.m in Sources */,
+				3B96AA821139BC99003FF405 /* GCCalendarViewController.m in Sources */,
 				3B96AA831139BC99003FF405 /* GCDatePickerControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

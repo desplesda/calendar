@@ -15,8 +15,8 @@
 @end
 
 @class GCCalendarEvent;
-@class GCCalendarView;
+@class GCCalendarViewController;
 @protocol GCCalendarDelegate <NSObject>
-- (void)calendarTileTouchedInView:(GCCalendarView *)view withEvent:(GCCalendarEvent *)event;
-- (void)calendarViewAddButtonPressed:(GCCalendarView *)view;
+- (void)calendarTileTouchedInView:(GCCalendarViewController *)view withEvent:(GCCalendarEvent *)event;
+- (void)calendarViewAddButtonPressed:(GCCalendarViewController *)view;
 @end

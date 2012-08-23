@@ -6,9 +6,9 @@
 //  Copyright 2010 GUI Cocoa Software. All rights reserved.
 //
 
-#import "GCCalendarView.h"
+#import "GCCalendarViewController.h"
 
-@implementation GCCalendarView
+@implementation GCCalendarViewController
 
 @synthesize delegate, dataSource;
 

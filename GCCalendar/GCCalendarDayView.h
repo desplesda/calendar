@@ -41,7 +41,7 @@
  */
 @property (nonatomic) CGPoint contentOffset;
 
-- (id)initWithCalendarView:(GCCalendarView *)view;
+- (id)initWithCalendarView:(GCCalendarViewController *)view;
 - (void)reloadData;
 
 @end

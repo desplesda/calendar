@@ -10,7 +10,7 @@
 
 #import "GCCalendarProtocols.h"
 
-@interface GCCalendarView : UIViewController {
+@interface GCCalendarViewController : UIViewController {
 	// data source
 	id<GCCalendarDataSource> __unsafe_unretained dataSource;
 	
