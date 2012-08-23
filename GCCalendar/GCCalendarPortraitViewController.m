@@ -10,7 +10,7 @@
 
 #import "GCCalendarPortraitViewController.h"
 #import "GCCalendarDayView.h"
-#import "GCCalendarTile.h"
+#import "GCCalendarTileView.h"
 #import "GCDatePickerControl.h"
 #import "GCCalendar.h"
 
@@ -61,7 +61,7 @@
 }
 - (void)calendarTileTouch:(NSNotification *)notif {
 	if (delegate != nil) {
-		GCCalendarTile *tile = [notif object];
+		GCCalendarTileView *tile = [notif object];
 		[delegate calendarTileTouchedInView:self withEvent:[tile event]];
 	}
 }
