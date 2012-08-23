@@ -79,7 +79,27 @@
 	[components setHour:20];
 	evt.endDate = [[NSCalendar currentCalendar] dateFromComponents:components];
 	[events addObject:evt];
+     
+    evt = [[GCCalendarEvent alloc] init];
+	evt.eventName = @"Test event";
+	evt.eventDescription = @"Description for test event. This is intentionnaly too long to stay on a single line.";
+	[components setHour:17];
+	[components setMinute:0];
+	evt.startDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+	[components setHour:20];
+	evt.endDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+	[events addObject:evt];
 	
+    evt = [[GCCalendarEvent alloc] init];
+	evt.eventName = @"Test event";
+	[components setHour:19];
+	[components setMinute:0];
+	evt.startDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+	[components setHour:20];
+    [components setMinute:30];
+	evt.endDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+	[events addObject:evt];
+    
 	// create an all day event
 	GCCalendarEvent *event = [[GCCalendarEvent alloc] init];
 	event.allDayEvent = YES;

@@ -166,10 +166,15 @@ static NSArray *timeStrings;
 		CGFloat endPos = kTopLineBuffer + endHour * 2 * kHalfHourDiff + 3;
 		endPos += (endMinute / 60.0) * (kHalfHourDiff * 2.0);
 		endPos = floor(endPos);
+        
+        NSLog(@"%@ has %i intersecting events", tile.event, tile.event.intersectingEvents.count);
+        
+        NSInteger columnWidth = (self.bounds.size.width - kTileLeftSide - kTileRightSide) / tile.event.intersectingEvents.count;
+        NSInteger columnNumber = tile.event.column;
 		
-		tile.frame = CGRectMake(kTileLeftSide, 
+		tile.frame = CGRectMake(kTileLeftSide + (columnWidth * columnNumber),
 								startPos, 
-								self.bounds.size.width - kTileLeftSide - kTileRightSide,
+								columnWidth,
 								endPos - startPos);
 	}
 }
@@ -297,7 +302,23 @@ static NSArray *timeStrings;
 - (void)reloadData {
 	// get new events for date
 	events = [dataSource calendarEventsForDate:date];
-	
+    
+    // sort the events by start date
+    events = [events sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES]]];
+    
+    // figure out which events intersect (yay, O(n^2))
+    for (GCCalendarEvent* event in events) {
+        
+        NSMutableArray* intersectingEvents = [NSMutableArray array];
+        
+        for (GCCalendarEvent* otherEvent in events) {
+            if ([event intersectsEvent:otherEvent])
+                [intersectingEvents addObject:otherEvent];
+        }
+        
+        event.intersectingEvents = intersectingEvents;
+    }
+    
 	// drop all subviews
 	[self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	

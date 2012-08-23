@@ -22,25 +22,7 @@
 	represents.  Ex. in CoreData based applications, userInfo could be
 	the objectID of a managed object.
  */
-@interface GCCalendarEvent : NSObject {
-	// name of the event
-	NSString *eventName;
-	// event description
-	NSString *eventDescription;
-	
-	// start date
-	NSDate *startDate;
-	// end date
-	NSDate *endDate;
-	
-	// color
-	NSString *color;
-	// is this an all day event
-	BOOL allDayEvent;
-	
-	// contextual information
-	id userInfo;
-}
+@interface GCCalendarEvent : NSObject
 
 @property (nonatomic, copy) NSString *eventName;
 @property (nonatomic, copy) NSString *eventDescription;
@@ -49,5 +31,10 @@
 @property (nonatomic, copy) NSString *color;
 @property (nonatomic, strong) id userInfo;
 @property (nonatomic) BOOL allDayEvent;
+
+@property (nonatomic, copy) NSArray* intersectingEvents;
+@property (readonly) NSInteger column;
+
+- (BOOL) intersectsEvent:(GCCalendarEvent*)otherEvent;
 
 @end

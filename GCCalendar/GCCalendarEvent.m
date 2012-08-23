@@ -12,20 +12,31 @@
 
 @implementation GCCalendarEvent
 
-@synthesize eventName;
-@synthesize eventDescription;
-@synthesize startDate;
-@synthesize endDate;
-@synthesize allDayEvent;
-@synthesize color;
-@synthesize userInfo;
-
 - (id)init {
 	if (self = [super init]) {
 		self.color = @"GREY";
 	}
 	
 	return self;
+}
+
+- (BOOL) intersectsEvent:(GCCalendarEvent*)otherEvent {
+    
+    NSTimeInterval myStartDateTime = self.startDate.timeIntervalSinceReferenceDate;
+    NSTimeInterval myEndDateTime = self.endDate.timeIntervalSinceReferenceDate;
+    
+    
+    NSTimeInterval theirStartDateTime = otherEvent.startDate.timeIntervalSinceReferenceDate;
+    NSTimeInterval theirEndDateTime = otherEvent.endDate.timeIntervalSinceReferenceDate;
+    
+    
+    return (myStartDateTime <= theirEndDateTime) && (myEndDateTime >= theirStartDateTime);
+}
+
+- (NSInteger)column {
+    
+    return [self.intersectingEvents indexOfObject:self];
+    
 }
 
 
