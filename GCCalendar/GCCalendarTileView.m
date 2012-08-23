@@ -8,11 +8,11 @@
 //  Copyright GUI Cocoa Software 2010. All rights reserved.
 //
 
-#import "GCCalendarTile.h"
+#import "GCCalendarTileView.h"
 #import "GCCalendarEvent.h"
 #import "GCCalendar.h"
 
-@implementation GCCalendarTile
+@implementation GCCalendarTileView
 
 @synthesize event;
 

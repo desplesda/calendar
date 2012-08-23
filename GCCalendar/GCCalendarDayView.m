@@ -9,7 +9,7 @@
 //
 
 #import "GCCalendarDayView.h"
-#import "GCCalendarTile.h"
+#import "GCCalendarTileView.h"
 #import "GCCalendarViewController.h"
 #import "GCCalendarEvent.h"
 #import "GCCalendar.h"
@@ -41,7 +41,7 @@ static NSArray *timeStrings;
 		NSInteger eventCount = 0;
 		for (GCCalendarEvent *e in events) {
 			if (eventCount < 5) {
-				GCCalendarTile *tile = [[GCCalendarTile alloc] init];
+				GCCalendarTileView *tile = [[GCCalendarTileView alloc] init];
 				tile.event = e;
 				[self addSubview:tile];
 				
@@ -75,7 +75,7 @@ static NSArray *timeStrings;
 	
 	for (UIView *view in self.subviews) {
 		// get calendar tile and associated event
-		GCCalendarTile *tile = (GCCalendarTile *)view;
+		GCCalendarTileView *tile = (GCCalendarTileView *)view;
 		
 		tile.frame = CGRectMake(kTileLeftSide,
 								start_y,
@@ -126,7 +126,7 @@ static NSArray *timeStrings;
 		events = [a filteredArrayUsingPredicate:pred];
 		
 		for (GCCalendarEvent *e in events) {
-			GCCalendarTile *tile = [[GCCalendarTile alloc] init];
+			GCCalendarTileView *tile = [[GCCalendarTileView alloc] init];
 			tile.event = e;
 			[self addSubview:tile];
 		}
@@ -144,7 +144,7 @@ static NSArray *timeStrings;
 - (void)layoutSubviews {
 	for (UIView *view in self.subviews) {
 		// get calendar tile and associated event
-		GCCalendarTile *tile = (GCCalendarTile *)view;
+		GCCalendarTileView *tile = (GCCalendarTileView *)view;
 		
 		NSDateComponents *components;
 		components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | 

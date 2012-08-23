@@ -17,7 +17,7 @@
  
  Each tile posts a notification whenever a touch ends inside its frame.
  */
-@interface GCCalendarTile : UIView {
+@interface GCCalendarTileView : UIView {
 	// event title label
 	UILabel *titleLabel;
 	// event description label
