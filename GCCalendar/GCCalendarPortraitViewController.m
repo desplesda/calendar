@@ -83,14 +83,9 @@
 #pragma mark view notifications
 
 - (void)viewDidLoad {
-    
-    self.title = [[NSBundle mainBundle] localizedStringForKey:@"CALENDAR" value:@"" table:@"GCCalendar"];
-    self.tabBarItem.image = [UIImage imageNamed:@"Calendar.png"];
-    
+        
     viewDirty = YES;
     viewVisible = NO;
-    
-    
     
     self.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"GCCalendarDate"];
 	if (date == nil) {
