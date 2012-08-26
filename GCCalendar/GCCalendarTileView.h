@@ -25,6 +25,9 @@
 	
 	// view containing stretchable image
 	UIImageView *backgroundView;
+    
+    // view containing the event's badge image
+    UIImageView* badgeImageView;
 	
 	// event from which to draw tile
 	GCCalendarEvent *event;

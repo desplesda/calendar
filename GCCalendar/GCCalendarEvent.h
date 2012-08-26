@@ -32,6 +32,9 @@
 @property (nonatomic, strong) id userInfo;
 @property (nonatomic) BOOL allDayEvent;
 
+// If set, this image will be displayed at the right of the title.
+@property (nonatomic, strong) UIImage* image;
+
 @property (nonatomic, copy) NSArray* intersectingEvents;
 @property (readonly) NSInteger column;
 

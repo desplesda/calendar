@@ -12,6 +12,8 @@
 #import "GCCalendarEvent.h"
 #import "GCCalendar.h"
 
+#define TILE_SIDE_PADDING 6
+
 @implementation GCCalendarTileView
 
 @synthesize event;
@@ -35,11 +37,14 @@
 		descriptionLabel.font = [UIFont systemFontOfSize:12.0f];
 		descriptionLabel.lineBreakMode = UILineBreakModeWordWrap;
 		descriptionLabel.numberOfLines = 0;
+        
+        badgeImageView = [[UIImageView alloc] init];
 		
 		backgroundView = [[UIImageView alloc] init];
 		backgroundView.alpha = 0.90f;
 		
 		[self addSubview:backgroundView];
+        [self addSubview:badgeImageView];
 		[self addSubview:titleLabel];
 		[self addSubview:descriptionLabel];
 	}
@@ -62,27 +67,40 @@
 	// set title
 	titleLabel.text = event.eventName;
 	descriptionLabel.text = event.eventDescription;
+    
+    if (event.image) {
+        badgeImageView.image = event.image;
+    }
 	
 	[self setNeedsDisplay];
 }
 - (void)layoutSubviews {
 	CGRect myBounds = self.bounds;
-	
+    
+    
 	backgroundView.frame = myBounds;
+    
+    [badgeImageView sizeToFit];
+    badgeImageView.frame = CGRectMake(myBounds.size.width - badgeImageView.bounds.size.width - TILE_SIDE_PADDING, 3, badgeImageView.bounds.size.width, badgeImageView.bounds.size.height);
+	
+    NSInteger titleWidth = titleWidth = myBounds.size.width - TILE_SIDE_PADDING * 2;
+    if (event.image)
+        titleWidth -=  (myBounds.size.width - badgeImageView.frame.origin.x);
+        
 	
 	CGSize stringSize = [titleLabel.text sizeWithFont:titleLabel.font];
-	titleLabel.frame = CGRectMake(6,
+	titleLabel.frame = CGRectMake(TILE_SIDE_PADDING,
 								  3,
-								  myBounds.size.width - 12,
+								  titleWidth,
 								  stringSize.height);
 	
 	if (event.allDayEvent) {
 		descriptionLabel.frame = CGRectZero;
 	}
 	else {
-		descriptionLabel.frame = CGRectMake(6,
+		descriptionLabel.frame = CGRectMake(TILE_SIDE_PADDING,
 											titleLabel.frame.size.height + 2,
-											myBounds.size.width - 12,
+											myBounds.size.width - TILE_SIDE_PADDING * 2,
 											myBounds.size.height - 14 - titleLabel.frame.size.height);
 	}
 }
