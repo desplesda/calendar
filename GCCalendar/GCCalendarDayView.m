@@ -167,8 +167,6 @@ static NSArray *timeStrings;
 		endPos += (endMinute / 60.0) * (kHalfHourDiff * 2.0);
 		endPos = floor(endPos);
         
-        NSLog(@"%@ has %i intersecting events", tile.event, tile.event.intersectingEvents.count);
-        
         NSInteger columnWidth = (self.bounds.size.width - kTileLeftSide - kTileRightSide) / tile.event.intersectingEvents.count;
         NSInteger columnNumber = tile.event.column;
 		
