@@ -83,11 +83,11 @@
     [badgeImageView sizeToFit];
     badgeImageView.frame = CGRectMake(myBounds.size.width - badgeImageView.bounds.size.width - TILE_SIDE_PADDING, 3, badgeImageView.bounds.size.width, badgeImageView.bounds.size.height);
 	
-    NSInteger titleWidth = titleWidth = myBounds.size.width - TILE_SIDE_PADDING * 2;
+    NSInteger titleWidth = myBounds.size.width - TILE_SIDE_PADDING * 2;
+    
     if (event.image)
-        titleWidth -=  (myBounds.size.width - badgeImageView.frame.origin.x);
-        
-	
+        titleWidth -= (badgeImageView.bounds.size.width + 3);
+    
 	CGSize stringSize = [titleLabel.text sizeWithFont:titleLabel.font];
 	titleLabel.frame = CGRectMake(TILE_SIDE_PADDING,
 								  3,
