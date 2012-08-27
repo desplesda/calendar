@@ -12,6 +12,21 @@
 @protocol GCCalendarDataSource <NSObject>
 @required
 - (NSArray *)calendarEventsForDate:(NSDate *)date;
+
+@optional
+
+@property (retain) UIColor* outsideHoursColor;
+@property (retain) UIColor* officeHoursColor;
+@property (retain) UIColor* hourMarkerColor;
+@property (retain) UIColor* timeColor;
+@property (retain) UIColor* AMPMColor;
+
+@property (strong) UIImage* datePickerLeftButtonImage;
+@property (strong) UIImage* datePickerRightButtonImage;
+@property (strong) UIImage* datePickerBackgroundImage;
+@property (strong) UIColor* datePickerTextColor;
+@property (strong) UIColor* datePickerTextShadowColor;
+
 @end
 
 @class GCCalendarEvent;

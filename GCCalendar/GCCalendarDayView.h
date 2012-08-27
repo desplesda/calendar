@@ -44,4 +44,10 @@
 - (id)initWithCalendarView:(GCCalendarViewController *)view;
 - (void)reloadData;
 
+@property (retain) UIColor* outsideHoursColor;
+@property (retain) UIColor* officeHoursColor;
+@property (retain) UIColor* hourMarkerColor;
+@property (retain) UIColor* timeColor;
+@property (retain) UIColor* AMPMColor;
+
 @end

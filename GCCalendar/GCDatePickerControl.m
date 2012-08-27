@@ -20,6 +20,27 @@
 @synthesize date, today;
 
 #pragma mark create and destroy view
+
+- (void)setLeftButtonImage:(UIImage *)leftButtonImage {
+    [backButton setImage:leftButtonImage forState:UIControlStateNormal];
+}
+
+- (void)setRightButtonImage:(UIImage *)rightButtonImage {
+    [forwardButton setImage:rightButtonImage forState:UIControlStateNormal];
+}
+
+- (void)setTextColor:(UIColor *)color {
+    titleLabel.textColor = color;
+}
+
+- (void)setTextShadowColor:(UIColor *)color{
+    titleLabel.shadowColor = color;
+}
+
+- (void)setBackgroundImage:(UIImage *)image {
+    self.backgroundColor = [UIColor colorWithPatternImage:image];
+}
+
 - (id)init {
 	if(self = [super init]) {
 		self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GCDatePickerControlBackground.png"]];
@@ -119,7 +140,7 @@
 - (void)setToday:(BOOL)newToday {
 	today = newToday;
 	
-	if(today) {
+	/*if(today) {
 		titleLabel.textColor = [UIColor colorWithRed:0
 											   green:(88.0/255.0)
 												blue:(238.0/255.0)
@@ -129,7 +150,7 @@
 											   green:(65.0/255.0)
 												blue:(84.0/255.0)
 											   alpha:1.0];
-	}
+	}*/
 }
 
 #pragma mark button actions

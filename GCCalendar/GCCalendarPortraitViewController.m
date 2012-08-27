@@ -110,11 +110,31 @@
 	[self.view addSubview:dayView];
 	
 	// setup today button
-	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[[NSBundle mainBundle] localizedStringForKey:@"TODAY" value:@"" table:@"GCCalendar"]
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Today"
 															   style:UIBarButtonItemStylePlain
 															  target:self
 															  action:@selector(today)];
 	self.navigationItem.leftBarButtonItem = button;
+    
+    if ([dataSource respondsToSelector:@selector(datePickerLeftButtonImage)])
+        [dayPicker setLeftButtonImage:[dataSource datePickerLeftButtonImage]];
+    
+    if ([dataSource respondsToSelector:@selector(datePickerLeftButtonImage)])
+        [dayPicker setRightButtonImage:[dataSource datePickerRightButtonImage]];
+    
+    if ([dataSource respondsToSelector:@selector(datePickerBackgroundImage)])
+        [dayPicker setBackgroundImage:[dataSource datePickerBackgroundImage]];
+    
+    if ([dataSource respondsToSelector:@selector(datePickerTextColor)])
+        [dayPicker setTextColor:[dataSource datePickerTextColor]];
+    
+    if ([dataSource respondsToSelector:@selector(datePickerTextShadowColor)])
+        [dayPicker setTextShadowColor:[dataSource datePickerTextShadowColor]];
+    
+
+
+    
+        
 }
 
 - (void)loadView {

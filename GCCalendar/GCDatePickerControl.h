@@ -32,4 +32,12 @@
 
 @property (nonatomic, strong) NSDate *date;
 
+- (void) setLeftButtonImage:(UIImage*)image;
+- (void) setRightButtonImage:(UIImage*)image;
+- (void) setBackgroundImage:(UIImage*)image;
+- (void) setTextColor:(UIColor*)color;
+- (void) setTextShadowColor:(UIColor*)color;
+
+
+
 @end

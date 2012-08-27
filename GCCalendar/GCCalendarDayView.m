@@ -111,17 +111,21 @@ static NSArray *timeStrings;
 
 @interface GCCalendarTodayView : UIView {
 	NSArray *events;
+    __weak GCCalendarDayView *_dayView;
 }
 
-- (id)initWithEvents:(NSArray *)a;
+- (id)initWithEvents:(NSArray *)a dayView:(GCCalendarDayView*)dayView;
 - (BOOL)hasEvents;
 + (CGFloat)yValueForTime:(CGFloat)time;
 
 @end
 
 @implementation GCCalendarTodayView
-- (id)initWithEvents:(NSArray *)a {
+- (id)initWithEvents:(NSArray *)a dayView:(GCCalendarDayView *)dayView {
 	if (self = [super init]) {
+        
+        _dayView = dayView;
+        
 		NSPredicate *pred = [NSPredicate predicateWithFormat:@"allDayEvent == NO"];
 		events = [a filteredArrayUsingPredicate:pred];
 		
@@ -130,6 +134,8 @@ static NSArray *timeStrings;
 			tile.event = e;
 			[self addSubview:tile];
 		}
+        
+        self.backgroundColor = [UIColor clearColor];
 	}
 	
 	return self;
@@ -179,8 +185,8 @@ static NSArray *timeStrings;
 - (void)drawRect:(CGRect)rect {
     // grab current graphics context
 	CGContextRef g = UIGraphicsGetCurrentContext();
-	
-	CGContextSetRGBFillColor(g, (242.0 / 255.0), (242.0 / 255.0), (242.0 / 255.0), 1.0);
+    
+    CGContextSetFillColorWithColor(g, _dayView.outsideHoursColor.CGColor);
 	
 	// fill morning hours light grey
 	CGFloat morningHourMax = [GCCalendarTodayView yValueForTime:(CGFloat)8];
@@ -193,14 +199,16 @@ static NSArray *timeStrings;
 	CGContextFillRect(g, eveningHours);
 	
 	// fill day hours white
-	CGContextSetRGBFillColor(g, 1.0, 1.0, 1.0, 1.0);
+    
+    CGContextSetFillColorWithColor(g, _dayView.officeHoursColor.CGColor);
+    
 	CGRect dayHours = CGRectMake(0, morningHourMax - 1, self.frame.size.width, eveningHourMax - morningHourMax);
 	CGContextFillRect(g, dayHours);
 	
 	// draw hour lines
 	CGContextSetShouldAntialias(g, NO);
 	const CGFloat solidPattern[2] = {1.0, 0.0};
-	CGContextSetRGBStrokeColor(g, 0.0, 0.0, 0.0, .3);
+	CGContextSetStrokeColorWithColor(g, _dayView.hourMarkerColor.CGColor);
 	CGContextSetLineDash(g, 0, solidPattern, 2);
 	for (NSInteger i = 0; i < 25; i++) {
 		CGFloat yVal = [GCCalendarTodayView yValueForTime:(CGFloat)i];
@@ -212,8 +220,10 @@ static NSArray *timeStrings;
 	// draw half hour lines
 	CGContextSetShouldAntialias(g, NO);
 	const CGFloat dashPattern[2] = {1.0, 1.0};
-	CGContextSetRGBStrokeColor(g, 0.0, 0.0, 0.0, .2);
-	CGContextSetLineDash(g, 0, dashPattern, 2);
+    
+	CGContextSetStrokeColorWithColor(g, _dayView.hourMarkerColor.CGColor);
+	
+    CGContextSetLineDash(g, 0, dashPattern, 2);
 	for (NSInteger i = 0; i < 24; i++) {
 		CGFloat time = (CGFloat)i + 0.5f;
 		CGFloat yVal = [GCCalendarTodayView yValueForTime:time];
@@ -224,7 +234,7 @@ static NSArray *timeStrings;
 	
 	// draw hour numbers
 	CGContextSetShouldAntialias(g, YES);
-	[[UIColor blackColor] set];
+	[_dayView.timeColor set];
 	UIFont *numberFont = [UIFont boldSystemFontOfSize:14.0];
 	for (NSInteger i = 0; i < 25; i++) {
 		CGFloat yVal = [GCCalendarTodayView yValueForTime:(CGFloat)i];
@@ -251,7 +261,7 @@ static NSArray *timeStrings;
 	
 	// draw am / pm text
 	CGContextSetShouldAntialias(g, YES);
-	[[UIColor grayColor] set];
+	[_dayView.AMPMColor set];
 	UIFont *textFont = [UIFont systemFontOfSize:12.0];
 	for (NSInteger i = 0; i < 25; i++) {
 		NSString *text = nil;
@@ -286,13 +296,24 @@ static NSArray *timeStrings;
 	if(self == [GCCalendarDayView class]) {
 		timeStrings = @[@"12",
 						@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11",
-						[[NSBundle mainBundle] localizedStringForKey:@"NOON" value:@"" table:@"GCCalendar"],
+						@"Noon",
 						@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"];
 	}
 }
 - (id)initWithCalendarView:(GCCalendarViewController *)view {
 	if (self = [super init]) {
 		dataSource = view.dataSource;
+        
+        self.outsideHoursColor = [UIColor colorWithRed:(242.0 / 255.0) green:(242.0 / 255.0) blue:(242.0 / 255.0) alpha:1.0];
+        
+        self.officeHoursColor = [UIColor whiteColor];
+        self.hourMarkerColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+        
+        self.timeColor = [UIColor blackColor];
+        self.AMPMColor = [UIColor darkGrayColor];
+        
+        self.backgroundColor = [UIColor clearColor];
+        self.opaque = NO;
 	}
 	
 	return self;
@@ -317,6 +338,24 @@ static NSArray *timeStrings;
         event.intersectingEvents = intersectingEvents;
     }
     
+    // Reload theming info
+    if ([dataSource respondsToSelector:@selector(outsideHoursColor)])
+        self.outsideHoursColor = [dataSource outsideHoursColor];
+    
+    if ([dataSource respondsToSelector:@selector(hourMarkerColor)])
+        self.hourMarkerColor = [dataSource hourMarkerColor];
+    
+    if ([dataSource respondsToSelector:@selector(timeColor)])
+        self.timeColor = [dataSource timeColor];
+    
+    if ([dataSource respondsToSelector:@selector(hourMarkerColor)])
+        self.AMPMColor = [dataSource AMPMColor];
+    
+    if ([dataSource respondsToSelector:@selector(officeHoursColor)])
+        self.officeHoursColor = [dataSource officeHoursColor];
+    
+
+    
 	// drop all subviews
 	[self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	
@@ -329,15 +368,15 @@ static NSArray *timeStrings;
 	
 	// create scroll view
 	scrollView = [[UIScrollView alloc] init];
-	scrollView.backgroundColor = [UIColor colorWithRed:(242.0 / 255.0) green:(242.0 / 255.0) blue:(242.0 / 255.0) alpha:1.0];
 	scrollView.frame = CGRectMake(0, allDayView.frame.size.height, self.frame.size.width,
 								  self.frame.size.height - allDayView.frame.size.height);
 	scrollView.contentSize = CGSizeMake(self.frame.size.width, 1078);
 	scrollView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 	[self addSubview:scrollView];
+    scrollView.backgroundColor = [UIColor clearColor];
 	
 	// create today view
-	todayView = [[GCCalendarTodayView alloc] initWithEvents:events];
+	todayView = [[GCCalendarTodayView alloc] initWithEvents:events dayView:self];
 	todayView.frame = CGRectMake(0, 0, self.frame.size.width, 1078);
 	todayView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[scrollView addSubview:todayView];
