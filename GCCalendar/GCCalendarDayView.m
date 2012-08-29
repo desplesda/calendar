@@ -19,7 +19,7 @@
 
 #define kTopLineBuffer 11.0
 #define kSideLineBuffer 50.0
-#define kHalfHourDiff 22.0
+#define kHalfHourDiff 44.0
 
 static NSArray *timeStrings;
 
@@ -283,7 +283,7 @@ static NSArray *timeStrings;
 	}
 }
 + (CGFloat)yValueForTime:(CGFloat)time {
-	return kTopLineBuffer + (44.0f * time);;
+	return kTopLineBuffer + (88.0f * time);;
 }
 @end
 
@@ -370,14 +370,14 @@ static NSArray *timeStrings;
 	scrollView = [[UIScrollView alloc] init];
 	scrollView.frame = CGRectMake(0, allDayView.frame.size.height, self.frame.size.width,
 								  self.frame.size.height - allDayView.frame.size.height);
-	scrollView.contentSize = CGSizeMake(self.frame.size.width, 1078);
+	scrollView.contentSize = CGSizeMake(self.frame.size.width, 2156);
 	scrollView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 	[self addSubview:scrollView];
     scrollView.backgroundColor = [UIColor clearColor];
 	
 	// create today view
 	todayView = [[GCCalendarTodayView alloc] initWithEvents:events dayView:self];
-	todayView.frame = CGRectMake(0, 0, self.frame.size.width, 1078);
+	todayView.frame = CGRectMake(0, 0, self.frame.size.width, 2156);
 	todayView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[scrollView addSubview:todayView];
 }
@@ -386,6 +386,10 @@ static NSArray *timeStrings;
 }
 - (CGPoint)contentOffset {
 	return scrollView.contentOffset;
+}
+
+-(void)scrollToHour:(CGFloat)hour {
+    [self setContentOffset:CGPointMake(0, [GCCalendarTodayView yValueForTime:hour])];
 }
 
 @end

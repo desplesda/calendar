@@ -51,13 +51,24 @@
 
 #pragma mark button actions
 - (void)today {
-	dayPicker.date = [NSDate date];
 	
+    if (dayPicker.delegate && [dayPicker.delegate datePickerControl:dayPicker willChangeToDate:[NSDate date]] == NO) {
+        
+    } else {
+        dayPicker.date = [NSDate date];
+    }
+    
 	self.date = dayPicker.date;
 	
 	[[NSUserDefaults standardUserDefaults] setObject:date forKey:@"GCCalendarDate"];
 	
 	[self reloadDayAnimated:NO context:NULL];
+    
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* components = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
+    
+    [self.dayView scrollToHour:[components hour] - 1];
+    
 }
 - (void)add {
 	if (delegate != nil) {
@@ -97,6 +108,7 @@
 	dayPicker.frame = CGRectMake(0, 0, self.view.frame.size.width, 0);
 	dayPicker.autoresizingMask = UIViewAutoresizingNone;
 	dayPicker.date = date;
+    dayPicker.delegate = self;
 	[dayPicker addTarget:self action:@selector(datePickerDidChangeDate:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:dayPicker];
 	
@@ -110,7 +122,7 @@
 	[self.view addSubview:dayView];
 	
 	// setup today button
-	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Today"
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Now"
 															   style:UIBarButtonItemStylePlain
 															  target:self
 															  action:@selector(today)];
@@ -132,7 +144,7 @@
         [dayPicker setTextShadowColor:[dataSource datePickerTextShadowColor]];
     
 
-
+    
     
         
 }
@@ -160,6 +172,12 @@
 	}
 	
 	viewVisible = YES;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self.dayView scrollToHour:[[NSUserDefaults standardUserDefaults] floatForKey:@"start_time"]];
+    });
+
 }
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
@@ -238,6 +256,10 @@
 
 - (void)reloadData {
     [self reloadDayAnimated:NO context:NULL];
+}
+
+- (BOOL)datePickerControl:(GCDatePickerControl *)picker willChangeToDate:(NSDate *)date {
+    return YES;
 }
 
 @end

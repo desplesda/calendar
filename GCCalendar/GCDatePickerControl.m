@@ -48,14 +48,14 @@
 		// left button
 		backButton = [[UIButton alloc] init];
 		[backButton setImage:[UIImage imageNamed:@"GCDatePickerControlLeft.png"] forState:UIControlStateNormal];
-		backButton.showsTouchWhenHighlighted = NO;
+		backButton.showsTouchWhenHighlighted = YES;
 		backButton.adjustsImageWhenHighlighted = NO;
 		[backButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		
 		// right button
 		forwardButton = [[UIButton alloc] init];
 		[forwardButton setImage:[UIImage imageNamed:@"GCDatePickerControlRight.png"] forState:UIControlStateNormal];
-		forwardButton.showsTouchWhenHighlighted = NO;
+		forwardButton.showsTouchWhenHighlighted = YES;
 		forwardButton.adjustsImageWhenHighlighted = NO;
 		[forwardButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		
@@ -158,10 +158,14 @@
 #define kSecondsInDay (60 * 60 * 24)
 	if(sender == backButton) {
 		NSDate *newDate = [[NSDate alloc] initWithTimeInterval:-kSecondsInDay sinceDate:date];
-		self.date = newDate;
+        if (self.delegate && [self.delegate datePickerControl:self willChangeToDate:newDate] == NO)
+            return;
+        self.date = newDate;
 	} else if(sender == forwardButton) {
 		NSDate *newDate = [[NSDate alloc] initWithTimeInterval:kSecondsInDay sinceDate:date];
-		self.date = newDate;
+        if (self.delegate && [self.delegate datePickerControl:self willChangeToDate:newDate] == NO)
+            return;
+        self.date = newDate;
 	}
 	
 	[self sendActionsForControlEvents:UIControlEventValueChanged];

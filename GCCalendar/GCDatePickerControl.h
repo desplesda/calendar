@@ -10,6 +10,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class GCDatePickerControl;
+
+@protocol GCDatePickerControlDelegate <NSObject>
+
+- (BOOL) datePickerControl:(GCDatePickerControl*)picker willChangeToDate:(NSDate*)date;
+
+@end
+
 /*
  This UIControl subclass displays the mechanism for changing the currently
  displayed date.  When the date is changed by the user, an action is posted
@@ -38,6 +46,6 @@
 - (void) setTextColor:(UIColor*)color;
 - (void) setTextShadowColor:(UIColor*)color;
 
-
+@property (weak) id<GCDatePickerControlDelegate> delegate;
 
 @end

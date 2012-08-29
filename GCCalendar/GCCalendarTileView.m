@@ -11,6 +11,7 @@
 #import "GCCalendarTileView.h"
 #import "GCCalendarEvent.h"
 #import "GCCalendar.h"
+#import "EAGlossyBox.h"
 
 #define TILE_SIDE_PADDING 6
 
@@ -29,6 +30,7 @@
 		titleLabel.textColor = [UIColor whiteColor];
 		titleLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
 		titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+        titleLabel.numberOfLines = 0;
 		
 		descriptionLabel = [[UILabel alloc] init];
 		descriptionLabel.backgroundColor = [UIColor clearColor];
@@ -40,7 +42,7 @@
         
         badgeImageView = [[UIImageView alloc] init];
 		
-		backgroundView = [[UIImageView alloc] init];
+		backgroundView = [[EAGlossyBox alloc] initWithFrame:CGRectZero];
 		backgroundView.alpha = 0.90f;
 		
 		[self addSubview:backgroundView];
@@ -58,15 +60,18 @@
 - (void)setEvent:(GCCalendarEvent *)e {
 	event = e;
 	
+    
 	// set bg image
-	NSString *colorString = [event.color capitalizedString];
-	NSString *colorImageName = [NSString stringWithFormat:@"CalendarBubble%@.png", colorString];
-	UIImage *bgImage = [UIImage imageNamed:colorImageName];
-	backgroundView.image = [bgImage stretchableImageWithLeftCapWidth:6 topCapHeight:13];
+    backgroundView.color = event.color;
 	
 	// set title
 	titleLabel.text = event.eventName;
 	descriptionLabel.text = event.eventDescription;
+    
+    if (event.eventDescription == nil)
+        descriptionLabel.hidden = YES;
+    else
+        descriptionLabel.hidden = NO;
     
     if (event.image) {
         badgeImageView.image = event.image;
@@ -78,21 +83,30 @@
 	CGRect myBounds = self.bounds;
     
     
-	backgroundView.frame = myBounds;
+	backgroundView.frame = CGRectInset(myBounds, 1, 1);
     
     [badgeImageView sizeToFit];
     badgeImageView.frame = CGRectMake(myBounds.size.width - badgeImageView.bounds.size.width - TILE_SIDE_PADDING, 3, badgeImageView.bounds.size.width, badgeImageView.bounds.size.height);
-	
+    
     NSInteger titleWidth = myBounds.size.width - TILE_SIDE_PADDING * 2;
     
-    if (event.image)
-        titleWidth -= (badgeImageView.bounds.size.width + 3);
+    CGSize stringSize = CGSizeZero;
     
-	CGSize stringSize = [titleLabel.text sizeWithFont:titleLabel.font];
-	titleLabel.frame = CGRectMake(TILE_SIDE_PADDING,
-								  3,
-								  titleWidth,
-								  stringSize.height);
+    CGRect titleRect = CGRectMake(TILE_SIDE_PADDING, 3, titleWidth, myBounds.size.height);
+    if (event.image)
+        titleRect.size.width -= (badgeImageView.bounds.size.width + 3);
+    
+    
+    if (event.eventDescription) {
+        stringSize = [titleLabel.text sizeWithFont:titleLabel.font];
+    } else {
+        stringSize = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:titleRect.size];
+    }
+    
+    
+    titleRect.size = stringSize;
+    
+	titleLabel.frame = titleRect;
 	
 	if (event.allDayEvent) {
 		descriptionLabel.frame = CGRectZero;

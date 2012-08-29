@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 
 @class GCCalendarEvent;
+@class EAGlossyBox;
 
 /*
  A GCCalendarTile draws itself using data in the event passed to it.
@@ -24,7 +25,7 @@
 	UILabel *descriptionLabel;
 	
 	// view containing stretchable image
-	UIImageView *backgroundView;
+	EAGlossyBox *backgroundView;
     
     // view containing the event's badge image
     UIImageView* badgeImageView;

@@ -50,4 +50,6 @@
 @property (retain) UIColor* timeColor;
 @property (retain) UIColor* AMPMColor;
 
+- (void) scrollToHour:(CGFloat)hour;
+
 @end
