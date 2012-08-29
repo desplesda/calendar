@@ -92,17 +92,15 @@
     
     CGSize stringSize = CGSizeZero;
     
-    CGRect titleRect = CGRectMake(TILE_SIDE_PADDING, 3, titleWidth, myBounds.size.height);
+    CGRect titleRect = CGRectMake(TILE_SIDE_PADDING, 3, titleWidth, myBounds.size.height-6);
     if (event.image)
         titleRect.size.width -= (badgeImageView.bounds.size.width + 3);
-    
     
     if (event.eventDescription) {
         stringSize = [titleLabel.text sizeWithFont:titleLabel.font];
     } else {
         stringSize = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:titleRect.size];
     }
-    
     
     titleRect.size = stringSize;
     

@@ -373,6 +373,7 @@ static NSArray *timeStrings;
 	scrollView.contentSize = CGSizeMake(self.frame.size.width, 2156);
 	scrollView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 	[self addSubview:scrollView];
+    scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     scrollView.backgroundColor = [UIColor clearColor];
 	
 	// create today view
