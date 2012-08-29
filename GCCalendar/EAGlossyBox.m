@@ -34,8 +34,16 @@
     return self;
 }
 
+// If we're in a UITableViewCell, when selected we appear to receive
+// a call to setBackgroundColor: that sets our color to clear.
+// We only want to do this when the 'color' property is set,
+// so ignore this call.
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    
+}
+
 - (void)setColor:(UIColor *)color {
-    self.backgroundColor = color;
+    [super setBackgroundColor:color];
 }
 
 - (void)layoutSubviews {
