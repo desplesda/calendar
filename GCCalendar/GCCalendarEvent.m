@@ -27,7 +27,10 @@
     
     NSTimeInterval theirStartDateTime = otherEvent.startDate.timeIntervalSinceReferenceDate;
     NSTimeInterval theirEndDateTime = otherEvent.endDate.timeIntervalSinceReferenceDate;
-    
+
+    if (myEndDateTime == theirStartDateTime || myStartDateTime == theirEndDateTime)
+        return NO;
+        
     return (myStartDateTime <= theirEndDateTime) && (myEndDateTime >= theirStartDateTime);
 }
 
