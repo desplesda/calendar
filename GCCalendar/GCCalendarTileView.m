@@ -29,7 +29,7 @@
 		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor whiteColor];
 		titleLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-		titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+		titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
         titleLabel.numberOfLines = 0;
 		
 		descriptionLabel = [[UILabel alloc] init];
@@ -80,19 +80,19 @@
 	[self setNeedsDisplay];
 }
 - (void)layoutSubviews {
-	CGRect myBounds = self.bounds;
+	CGRect myBounds = CGRectInset(self.bounds, 0, 3);
     
     
 	backgroundView.frame = CGRectInset(myBounds, 1, 1);
     
     [badgeImageView sizeToFit];
-    badgeImageView.frame = CGRectMake(myBounds.size.width - badgeImageView.bounds.size.width - TILE_SIDE_PADDING, 3, badgeImageView.bounds.size.width, badgeImageView.bounds.size.height);
+    badgeImageView.frame = CGRectMake(myBounds.size.width - badgeImageView.bounds.size.width - TILE_SIDE_PADDING, myBounds.origin.y+3, badgeImageView.bounds.size.width, badgeImageView.bounds.size.height);
     
     NSInteger titleWidth = myBounds.size.width - TILE_SIDE_PADDING * 2;
     
     CGSize stringSize = CGSizeZero;
     
-    CGRect titleRect = CGRectMake(TILE_SIDE_PADDING, 3, titleWidth, myBounds.size.height-6);
+    CGRect titleRect = CGRectMake(TILE_SIDE_PADDING, myBounds.origin.y+3, titleWidth, myBounds.size.height-10);
     if (event.image)
         titleRect.size.width -= (badgeImageView.bounds.size.width + 3);
     
