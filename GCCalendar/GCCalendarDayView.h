@@ -51,5 +51,6 @@
 @property (retain) UIColor* AMPMColor;
 
 - (void) scrollToHour:(CGFloat)hour;
+- (void) scrollToHour:(CGFloat)hour animated:(BOOL)animated;
 
 @end

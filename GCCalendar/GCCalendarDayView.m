@@ -428,15 +428,18 @@ static NSArray *timeStrings;
 	todayView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[scrollView addSubview:todayView];
 }
-- (void)setContentOffset:(CGPoint)p {
-	scrollView.contentOffset = p;
-}
+
+
 - (CGPoint)contentOffset {
 	return scrollView.contentOffset;
 }
 
+- (void) scrollToHour:(CGFloat)hour animated:(BOOL)animated {
+    [scrollView setContentOffset:CGPointMake(0, [GCCalendarTodayView yValueForTime:hour]) animated:animated];
+}
+
 -(void)scrollToHour:(CGFloat)hour {
-    [self setContentOffset:CGPointMake(0, [GCCalendarTodayView yValueForTime:hour])];
+    [self scrollToHour:hour animated:NO];
 }
 
 @end

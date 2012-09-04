@@ -67,7 +67,7 @@
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents* components = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
     
-    [self.dayView scrollToHour:[components hour] - 0.5];
+    [self.dayView scrollToHour:[components hour] - 0.5 animated:YES];
     
 }
 - (void)add {
