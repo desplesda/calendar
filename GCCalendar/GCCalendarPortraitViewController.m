@@ -53,11 +53,12 @@
 - (void)today {
     
     CGFloat hour;
+    
+    CGPoint currentContentOffset = self.dayView.contentOffset;
 	
     if (dayPicker.delegate && [dayPicker.delegate datePickerControl:dayPicker willChangeToDate:[NSDate date]] == NO) {
         dayPicker.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"start_date"];
         hour = 9;
-        
     } else {
         dayPicker.date = [NSDate date];
         NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -68,12 +69,13 @@
     }
     
 	self.date = dayPicker.date;
-	
+    
 	[[NSUserDefaults standardUserDefaults] setObject:date forKey:@"GCCalendarDate"];
 	
 	[self reloadDayAnimated:NO context:NULL];
     
-    
+    [self.dayView setContentOffset:currentContentOffset];
+	    
     [self.dayView scrollToHour:hour - 0.5 animated:YES];
     
 }

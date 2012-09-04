@@ -408,6 +408,9 @@ static NSArray *timeStrings;
 	[scrollView addSubview:todayView];
 }
 
+- (void)setContentOffset:(CGPoint)contentOffset {
+    scrollView.contentOffset = contentOffset;
+}
 
 - (CGPoint)contentOffset {
 	return scrollView.contentOffset;
