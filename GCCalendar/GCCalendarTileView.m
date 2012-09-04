@@ -12,6 +12,7 @@
 #import "GCCalendarEvent.h"
 #import "GCCalendar.h"
 #import "EAGlossyBox.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define TILE_SIDE_PADDING 6
 
@@ -29,7 +30,7 @@
 		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor whiteColor];
 		titleLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-		titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+		titleLabel.font = [UIFont systemFontOfSize:13.0f];
         titleLabel.numberOfLines = 0;
 		
 		descriptionLabel = [[UILabel alloc] init];
@@ -49,6 +50,9 @@
         [self addSubview:badgeImageView];
 		[self addSubview:titleLabel];
 		[self addSubview:descriptionLabel];
+        
+        self.layer.shouldRasterize = YES;
+        self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 	}
 	
 	return self;
@@ -65,7 +69,8 @@
     backgroundView.color = event.color;
 	
 	// set title
-	titleLabel.text = event.eventName;
+    titleLabel.text = event.eventName;
+                       
 	descriptionLabel.text = event.eventDescription;
     
     if (event.eventDescription == nil)

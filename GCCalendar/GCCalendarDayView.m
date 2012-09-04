@@ -152,16 +152,12 @@ static NSArray *timeStrings;
 		// get calendar tile and associated event
 		GCCalendarTileView *tile = (GCCalendarTileView *)view;
 		
-		NSDateComponents *components;
-		components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | 
-															   NSMinuteCalendarUnit) 
-													 fromDate:tile.event.startDate];
+        NSDateComponents *components;
+		components = tile.event.startDateComponents;
 		NSInteger startHour = [components hour];
 		NSInteger startMinute = [components minute];
 		
-		components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | 
-															   NSMinuteCalendarUnit) 
-													 fromDate:tile.event.endDate];
+		components = tile.event.endDateComponents;
 		NSInteger endHour = [components hour];
 		NSInteger endMinute = [components minute];
 		
@@ -335,8 +331,55 @@ static NSArray *timeStrings;
                 [intersectingEvents addObject:otherEvent];
         }
         
+        
         event.intersectingEvents = intersectingEvents;
     }
+    
+    for (GCCalendarEvent* event in events){
+        NSMutableArray* intersectingEvents = [NSMutableArray arrayWithArray:event.intersectingEvents];
+        NSMutableArray* intersectingEventsToRemove = [NSMutableArray array];
+        
+        for (GCCalendarEvent* otherEvent in intersectingEvents) {
+            BOOL intersecting = YES;
+            for (GCCalendarEvent* intersectingOtherEvent in intersectingEvents) {
+                if ([otherEvent intersectsEvent:intersectingOtherEvent] == NO) {
+                    intersecting = NO;
+                    break;
+                }
+            }
+            if (intersecting == NO) {
+                [intersectingEventsToRemove addObject:otherEvent];
+                break;
+            }
+            
+        }
+        
+        [intersectingEvents removeObjectsInArray:intersectingEventsToRemove];
+        
+        event.intersectingEvents = intersectingEvents;
+    }
+    
+    // Remove intersecting events from the list if two events do not intersect with each other
+    
+    
+    // Now events get the maximum value of intersecting events
+    /*for (GCCalendarEvent* event in events) {
+        
+        NSMutableArray* newEvents = [NSMutableArray array];
+        
+        for (GCCalendarEvent* otherEvent in event.intersectingEvents) {
+            for (GCCalendarEvent* otherIntersectingEvent in otherEvent.intersectingEvents) {
+                if (otherIntersectingEvent == event)
+                    continue;
+                if ([event.intersectingEvents containsObject:otherIntersectingEvent])
+                    continue;
+                
+                [newEvents addObject:otherIntersectingEvent];
+            }
+        }
+        NSLog(@"Added %i new events", newEvents.count);
+        event.intersectingEvents = [event.intersectingEvents arrayByAddingObjectsFromArray:newEvents];
+    }*/
     
     // Reload theming info
     if ([dataSource respondsToSelector:@selector(outsideHoursColor)])
@@ -375,6 +418,9 @@ static NSArray *timeStrings;
 	[self addSubview:scrollView];
     scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     scrollView.backgroundColor = [UIColor clearColor];
+    
+    
+    scrollView.contentInset = UIEdgeInsetsMake(-[GCCalendarTodayView yValueForTime:7.9], 0, -[GCCalendarTodayView yValueForTime:2], 0);
 	
 	// create today view
 	todayView = [[GCCalendarTodayView alloc] initWithEvents:events dayView:self];

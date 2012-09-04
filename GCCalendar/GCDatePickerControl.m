@@ -11,6 +11,8 @@
 #import "GCDatePickerControl.h"
 #import "GCCalendar.h"
 
+#define kSecondsInDay (60 * 60 * 24)
+
 @interface GCDatePickerControl ()
 @property (nonatomic) BOOL today;
 @end
@@ -130,6 +132,23 @@
 							[monthStrings objectAtIndex:month - 1],
 							day, year];
 	titleLabel.text = toDisplay;
+    
+    NSDate *dayBefore = [[NSDate alloc] initWithTimeInterval:-kSecondsInDay sinceDate:date];
+    NSDate *dayAfter = [[NSDate alloc] initWithTimeInterval:kSecondsInDay sinceDate:date];
+    
+    if (self.delegate && [self.delegate datePickerControl:self willChangeToDate:dayBefore] == NO) {
+        [self setButton:backButton enabled:NO];
+    } else {
+        [self setButton:backButton enabled:YES];
+    }
+    
+    if (self.delegate && [self.delegate datePickerControl:self willChangeToDate:dayAfter] == NO) {
+        [self setButton:forwardButton enabled:NO];
+    } else {
+        [self setButton:forwardButton enabled:YES];
+    }
+    
+    
 }
 - (void)setFrame:(CGRect)newFrame {
 	newFrame.size.height = 45;
@@ -153,9 +172,18 @@
 	}*/
 }
 
+- (void) setButton:(UIButton*)button enabled:(BOOL)enabled {
+    if (enabled) {
+        button.enabled = YES;
+        button.alpha = 1.0;
+    } else {
+        button.enabled = NO;
+        button.alpha = 0.5;
+    }
+}
+
 #pragma mark button actions
 - (void)buttonPressed:(UIButton *)sender {
-#define kSecondsInDay (60 * 60 * 24)
 	if(sender == backButton) {
 		NSDate *newDate = [[NSDate alloc] initWithTimeInterval:-kSecondsInDay sinceDate:date];
         if (self.delegate && [self.delegate datePickerControl:self willChangeToDate:newDate] == NO)

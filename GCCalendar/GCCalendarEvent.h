@@ -31,6 +31,9 @@
 @property (nonatomic, strong) id userInfo;
 @property (nonatomic) BOOL allDayEvent;
 
+@property (readonly) NSDateComponents* startDateComponents;
+@property (readonly) NSDateComponents* endDateComponents;
+
 // If set, this image will be displayed at the right of the title.
 @property (nonatomic, strong) UIImage* image;
 
