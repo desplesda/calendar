@@ -335,6 +335,7 @@ static NSArray *timeStrings;
         event.intersectingEvents = intersectingEvents;
     }
     
+    // Remove intersecting events from the list if two events do not intersect with each other
     for (GCCalendarEvent* event in events){
         NSMutableArray* intersectingEvents = [NSMutableArray arrayWithArray:event.intersectingEvents];
         NSMutableArray* intersectingEventsToRemove = [NSMutableArray array];
@@ -358,28 +359,6 @@ static NSArray *timeStrings;
         
         event.intersectingEvents = intersectingEvents;
     }
-    
-    // Remove intersecting events from the list if two events do not intersect with each other
-    
-    
-    // Now events get the maximum value of intersecting events
-    /*for (GCCalendarEvent* event in events) {
-        
-        NSMutableArray* newEvents = [NSMutableArray array];
-        
-        for (GCCalendarEvent* otherEvent in event.intersectingEvents) {
-            for (GCCalendarEvent* otherIntersectingEvent in otherEvent.intersectingEvents) {
-                if (otherIntersectingEvent == event)
-                    continue;
-                if ([event.intersectingEvents containsObject:otherIntersectingEvent])
-                    continue;
-                
-                [newEvents addObject:otherIntersectingEvent];
-            }
-        }
-        NSLog(@"Added %i new events", newEvents.count);
-        event.intersectingEvents = [event.intersectingEvents arrayByAddingObjectsFromArray:newEvents];
-    }*/
     
     // Reload theming info
     if ([dataSource respondsToSelector:@selector(outsideHoursColor)])

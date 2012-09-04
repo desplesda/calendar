@@ -51,11 +51,20 @@
 
 #pragma mark button actions
 - (void)today {
+    
+    CGFloat hour;
 	
     if (dayPicker.delegate && [dayPicker.delegate datePickerControl:dayPicker willChangeToDate:[NSDate date]] == NO) {
+        dayPicker.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"start_date"];
+        hour = 9;
         
     } else {
         dayPicker.date = [NSDate date];
+        NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents* components = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
+        hour = [components hour];
+        
+
     }
     
 	self.date = dayPicker.date;
@@ -64,10 +73,8 @@
 	
 	[self reloadDayAnimated:NO context:NULL];
     
-    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents* components = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
     
-    [self.dayView scrollToHour:[components hour] - 0.5 animated:YES];
+    [self.dayView scrollToHour:hour - 0.5 animated:YES];
     
 }
 - (void)add {
