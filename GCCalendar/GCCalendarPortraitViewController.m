@@ -116,8 +116,8 @@
 	dayPicker = [[GCDatePickerControl alloc] init];
 	dayPicker.frame = CGRectMake(0, 0, self.view.frame.size.width, 0);
 	dayPicker.autoresizingMask = UIViewAutoresizingNone;
-	dayPicker.date = date;
     dayPicker.delegate = self;
+	dayPicker.date = date;
 	[dayPicker addTarget:self action:@selector(datePickerDidChangeDate:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:dayPicker];
 	
